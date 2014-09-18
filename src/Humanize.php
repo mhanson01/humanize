@@ -118,4 +118,118 @@ class Humanize
         return $value;
     }
 
+    public function times($value, $overrides = [])
+    {
+        $return_value = isset($overrides[$value]) ? $overrides[$value] : $value;
+
+        switch($value) {
+            case 0:
+                return 'never';
+            case 1:
+                return 'once';
+            case 2:
+                return 'twice';
+            default:
+                return $return_value . ' times';
+        }
+
+    }
+
+    public function pluralize($count, $word, $plural_override = null)
+    {
+        if($count == 1) return $word;
+
+        return $plural_override ?: $word . 's';
+    }
+
+    public function pace($value, $interval, $unit = 'time', $plural_override = null)
+    {
+        $rounded = round($value);
+
+        if($rounded > 1)
+        {
+            $prefix = 'Approximately ';
+            $unit = $this->pluralize($rounded, $unit, $plural_override);
+        }
+        elseif($rounded < 1)
+        {
+            $prefix = 'Less than ';
+            $rounded = 1;
+        }
+
+        return $prefix . $rounded . ' ' . $unit . ' per ' . $interval;
+    }
+
+    public function filesize($bytes, $decimal_places = 0, $bytes_in_kb = 1024)
+    {
+        $bytes_in_tb = $bytes_in_kb * $bytes_in_kb * $bytes_in_kb * $bytes_in_kb;
+        $bytes_in_gb = $bytes_in_kb * $bytes_in_kb * $bytes_in_kb;
+        $bytes_in_mb = $bytes_in_kb * $bytes_in_kb;
+
+        if ($bytes >= $bytes_in_tb)
+        {
+            $bytes = number_format($bytes / $bytes_in_tb, $decimal_places) . ' TB';
+        }
+        elseif ($bytes >= $bytes_in_gb)
+        {
+            $bytes = number_format($bytes / $bytes_in_gb, $decimal_places) . ' GB';
+        }
+        elseif ($bytes >= $bytes_in_mb)
+        {
+            $bytes = number_format($bytes / $bytes_in_mb, $decimal_places) . ' MB';
+        }
+        elseif ($bytes >= $bytes_in_kb)
+        {
+            $bytes = number_format($bytes / $bytes_in_kb, $decimal_places) . ' KB';
+        }
+        elseif ($bytes > 1)
+        {
+            $bytes = $bytes . ' bytes';
+        }
+        elseif ($bytes == 1)
+        {
+            $bytes = $bytes . ' byte';
+        }
+        else
+        {
+            $bytes = '0 bytes';
+        }
+
+        return $bytes;
+    }
+
+    public function truncate($sentence, $max_length = 100, $ending = '...')
+    {
+        if(strlen($sentence) <= $max_length) return $sentence;
+
+        $ending_length = strlen($ending);
+
+        $sentence_length = $max_length - $ending_length;
+
+        $truncated_sentence = substr($sentence, 0, $sentence_length);
+
+        return $truncated_sentence . $ending;
+    }
+
+    public function truncatewords($sentence, $word_count)
+    {
+        $words = explode(' ', $sentence);
+
+        $truncated_sentence = '';
+        $space = '';
+
+        for($i=0; $i<$word_count; $i++)
+        {
+            $truncated_sentence .= $space . $words[$i];
+            $space = ' ';
+        }
+
+        return $truncated_sentence . '...';
+    }
+
+    public function br2nl($html)
+    {
+        return preg_replace('#<br\s*/?>#i', "\n", $html);
+    }
+
 }
