@@ -22,9 +22,9 @@ class Humanize
         return number_format($int, 0, null, ',');
     }
 
-    public function intword($int, $decimal_places = 0, $type = 'word')
+    public function intword($int, $decimal_places = 0, $compact = false)
     {
-        if($type == 'compact')
+        if($compact)
         {
             $array = $this->abbreviations;
             $spacer = null;
@@ -108,7 +108,7 @@ class Humanize
 
     public function compactinteger($int, $decimal_places = 0)
     {
-        return $this->intword($int, $decimal_places, 'compact');
+        return $this->intword($int, $decimal_places, true);
     }
 
     public function boundednumber($value, $max)
