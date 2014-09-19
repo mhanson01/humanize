@@ -282,4 +282,55 @@ class HumanizeSpec extends ObjectBehavior
         $this->br2nl('line 1<br />line 2')->shouldReturn("line 1\nline 2");
     }
 
+    function it_capitalizes_the_first_letter_of_a_sentence()
+    {
+        $this->capitalize('some boring string')->shouldReturn('Some boring string');
+    }
+
+    function it_capitalizes_every_word_of_a_sentence()
+    {
+        $this->capitalizeall('some boring string')->shouldReturn('Some Boring String');
+    }
+
+    function it_intelligently_capitalizes_words_in_a_sentence()
+    {
+        $this->titlecase('some of a boring string')->shouldReturn('Some of a Boring String');
+    }
+
+    function it_intelligently_capitalizes_words_in_a_sentence_with_extra_whitespace()
+    {
+        $this->titlecase('cool the          iTunes cake, O\'Malley!')->shouldReturn('Cool the iTunes Cake, O\'Malley!');
+    }
+
+    function it_strips_whitespace_from_a_string()
+    {
+        $this->strip_whitespace('Get           over     here!')->shouldReturn('Get over here!');
+    }
+
+    public $items = ['apple', 'orange', 'banana', 'pear', 'pineapple'];
+
+    function it_returns_a_formatted_array_list()
+    {
+        $this->oxford($this->items)->shouldReturn('apple, orange, banana, pear, and pineapple');
+    }
+
+    function it_returns_a_limited_formatted_array_list()
+    {
+        $this->oxford($this->items, 3)->shouldReturn('apple, orange, banana, and 2 others');
+    }
+
+    public $pictures = ['breakfast', 'lunch', 'dinner'];
+
+    function it_structures_a_sentence_properly_for_frequency()
+    {
+        $this->frequency($this->pictures, 'took pictures of food')->shouldReturn('took pictures of food 3 times');
+    }
+
+    public $selfies = [];
+
+    function it_structures_a_sentence_properly_for_an_empty_frequency()
+    {
+        $this->frequency($this->selfies, 'took selfies')->shouldReturn('never took selfies');
+    }
+
 }

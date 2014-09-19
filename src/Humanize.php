@@ -16,6 +16,9 @@ class Humanize
         3  => 'K',
         0  => ''
     );
+    protected $lowercase_words = array(
+        'a','an','and','at','but','by','de','en','for','if','in','of','on','or','the','to','via','vs'
+    );
 
     public function intcomma($int)
     {
@@ -230,6 +233,95 @@ class Humanize
     public function br2nl($html)
     {
         return preg_replace('#<br\s*/?>#i', "\n", $html);
+    }
+
+    public function capitalize($string)
+    {
+        $first_letter = strtoupper(substr($string, 0, 1));
+
+        $everything_else = substr($string, 1);
+
+        return $first_letter . $everything_else;
+    }
+
+    public function capitalizeall($string)
+    {
+        // just a wrapper, but here to match HubSport/Humanize
+        return ucwords($string);
+    }
+
+    public function titlecase($sentence)
+    {
+        $stripped_of_whitespace = $this->strip_whitespace($sentence);
+
+        $words = explode(' ', $stripped_of_whitespace);
+
+        foreach($words as $word)
+        {
+            if( ! in_array($word, $this->lowercase_words) and $word == strtolower($word) )
+            {
+                $formatted_words[] = ucwords($word);
+            }
+            else
+            {
+                $formatted_words[] = $word;
+            }
+        }
+        return implode(' ', $formatted_words);
+    }
+
+    public function strip_whitespace($input)
+    {
+        return preg_replace('!\s+!', ' ', $input);
+    }
+
+    public function oxford($array, $max_count = null)
+    {
+        $array_count = count($array);
+
+        $list = '';
+        $comma = '';
+        $and = '';
+        $additional_items = 0;
+
+        for($i=0; $i<$array_count; $i++)
+        {
+            if( ($i+1) == $array_count )
+            {
+                $and = 'and ';
+            }
+
+            if( $max_count and ($i+1) > $max_count )
+            {
+                $additional_items += 1;
+            }
+            else
+            {
+                $list .= $comma . $and . $array[$i];
+            }
+            $comma = ', ';
+        }
+
+        if($additional_items)
+        {
+            $list .= ', and ' . $additional_items . ' ' . $this->pluralize($additional_items, 'other');
+        }
+
+        return $list;
+    }
+
+    public function frequency($list, $action)
+    {
+        $list_count = count($list);
+
+        $times = $this->times($list_count);
+
+        if( $list_count == 0)
+        {
+            return $times . ' ' . $action;
+        }
+
+        return $action . ' ' . $times;
     }
 
 }
