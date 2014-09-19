@@ -20,11 +20,25 @@ class Humanize
         'a','an','and','at','but','by','de','en','for','if','in','of','on','or','the','to','via','vs'
     );
 
+    /**
+     * Converts an integer to a string containing commas every three digits.
+     *
+     * @param $int
+     * @return string
+     */
     public function intcomma($int)
     {
         return number_format($int, 0, null, ',');
     }
 
+    /**
+     * Converts a large integer to a friendly text representation.
+     *
+     * @param      $int
+     * @param int  $decimal_places
+     * @param bool $compact
+     * @return string
+     */
     public function intword($int, $decimal_places = 0, $compact = false)
     {
         if($compact)
@@ -49,6 +63,10 @@ class Humanize
         return $int;
     }
 
+    /**
+     * @param $int
+     * @return mixed
+     */
     public function apnumber($int)
     {
         $dictionary = array(
@@ -67,6 +85,11 @@ class Humanize
         return isset($dictionary[$int]) ? $dictionary[$int] : $int;
     }
 
+    /**
+     * @param        $date
+     * @param string $format
+     * @return bool|string
+     */
     public function naturalday($date, $format = 'm/d/Y')
     {
         $date = date($format, strtotime($date));
@@ -80,21 +103,39 @@ class Humanize
         return $date;
     }
 
+    /**
+     * @param string $format
+     * @return bool|string
+     */
     public function yesterday($format = 'm/d/Y')
     {
         return date($format, strtotime('-1 day'));
     }
 
+    /**
+     * @param string $format
+     * @return bool|string
+     */
     public function tomorrow($format = 'm/d/Y')
     {
         return date($format, strtotime('+1 day'));
     }
 
+    /**
+     * @param string $format
+     * @return bool|string
+     */
     public function today($format = 'm/d/Y')
     {
         return date($format);
     }
 
+    /**
+     * Converts an integer to its ordinal as a string.
+     *
+     * @param $number
+     * @return string
+     */
     public function ordinal($number)
     {
         $ends = array('th','st','nd','rd','th','th','th','th','th','th');
@@ -104,16 +145,34 @@ class Humanize
         return $number . ($mod100 >= 11 && $mod100 <= 13 ? 'th' :  $ends[$number % 10]);
     }
 
+    /**
+     * @param $number
+     * @return string
+     */
     public function formatnumbers($number)
     {
         return number_format($number, 2, '.', ',');
     }
 
+    /**
+     * Converts an integer into its most compact representation.
+     *
+     * @param     $int
+     * @param int $decimal_places
+     * @return string
+     */
     public function compactinteger($int, $decimal_places = 0)
     {
         return $this->intword($int, $decimal_places, true);
     }
 
+    /**
+     * Bounds a value from above.
+     *
+     * @param $value
+     * @param $max
+     * @return string
+     */
     public function boundednumber($value, $max)
     {
         if($value > $max) return $max . '+';
@@ -121,6 +180,13 @@ class Humanize
         return $value;
     }
 
+    /**
+     * Interprets numbers as occurrences. Also accepts an optional array/map of overrides.
+     *
+     * @param       $value
+     * @param array $overrides
+     * @return string
+     */
     public function times($value, $overrides = [])
     {
         $return_value = isset($overrides[$value]) ? $overrides[$value] : $value;
@@ -138,6 +204,14 @@ class Humanize
 
     }
 
+    /**
+     * Returns the plural version of a given word if the value is not 1. The default suffix is 's'.
+     *
+     * @param      $count
+     * @param      $word
+     * @param null $plural_override
+     * @return string
+     */
     public function pluralize($count, $word, $plural_override = null)
     {
         if($count == 1) return $word;
@@ -145,6 +219,15 @@ class Humanize
         return $plural_override ?: $word . 's';
     }
 
+    /**
+     * Matches a pace (value and interval) with a logical time frame.
+     *
+     * @param        $value
+     * @param        $interval
+     * @param string $unit
+     * @param null   $plural_override
+     * @return string
+     */
     public function pace($value, $interval, $unit = 'time', $plural_override = null)
     {
         $rounded = round($value);
@@ -163,6 +246,14 @@ class Humanize
         return $prefix . $rounded . ' ' . $unit . ' per ' . $interval;
     }
 
+    /**
+     * Formats the value like a 'human-readable' file size (i.e. '13 KB', '4.1 MB', '102 bytes', etc).
+     *
+     * @param     $bytes
+     * @param int $decimal_places
+     * @param int $bytes_in_kb
+     * @return string
+     */
     public function filesize($bytes, $decimal_places = 0, $bytes_in_kb = 1024)
     {
         $bytes_in_tb = $bytes_in_kb * $bytes_in_kb * $bytes_in_kb * $bytes_in_kb;
@@ -201,6 +292,15 @@ class Humanize
         return $bytes;
     }
 
+    /**
+     * Truncates a string if it is longer than the specified number of characters.
+     * Truncated strings will end with a translatable ellipsis sequence ("…").
+     *
+     * @param        $sentence
+     * @param int    $max_length
+     * @param string $ending
+     * @return string
+     */
     public function truncate($sentence, $max_length = 100, $ending = '...')
     {
         if(strlen($sentence) <= $max_length) return $sentence;
@@ -214,6 +314,13 @@ class Humanize
         return $truncated_sentence . $ending;
     }
 
+    /**
+     * Truncates a string after a certain number of words.
+     *
+     * @param $sentence
+     * @param $word_count
+     * @return string
+     */
     public function truncatewords($sentence, $word_count)
     {
         $words = explode(' ', $sentence);
@@ -230,26 +337,55 @@ class Humanize
         return $truncated_sentence . '...';
     }
 
+    /**
+     * Conversion of <br/> tags to newlines.
+     *
+     * @param $html
+     * @return mixed
+     */
     public function br2nl($html)
     {
         return preg_replace('#<br\s*/?>#i', "\n", $html);
     }
 
-    public function capitalize($string)
+    /**
+     * Capitalizes the first letter in a string, optionally lowercase the tail.
+     *
+     * @param      $string
+     * @param bool $lowercase_first
+     * @return string
+     */
+    public function capitalize($string, $lowercase_first = false)
     {
+        if($lowercase_first)
+        {
+            $string = strtoupper($string);
+        }
         $first_letter = strtoupper(substr($string, 0, 1));
 
-        $everything_else = substr($string, 1);
+        $tail = substr($string, 1);
 
-        return $first_letter . $everything_else;
+        return $first_letter . $tail;
     }
 
+    /**
+     * Captializes the first letter of every word in a string.
+     *
+     * @param $string
+     * @return string
+     */
     public function capitalizeall($string)
     {
         // just a wrapper, but here to match HubSport/Humanize
         return ucwords($string);
     }
 
+    /**
+     * Intelligently capitalizes eligible words in a string and normalizes internal whitespace.
+     *
+     * @param $sentence
+     * @return string
+     */
     public function titlecase($sentence)
     {
         $stripped_of_whitespace = $this->strip_whitespace($sentence);
@@ -270,11 +406,24 @@ class Humanize
         return implode(' ', $formatted_words);
     }
 
+    /**
+     * Normalizes internal whitespace.
+     *
+     * @param $input
+     * @return mixed
+     */
     public function strip_whitespace($input)
     {
         return preg_replace('!\s+!', ' ', $input);
     }
 
+    /**
+     * Converts a list of items to a human readable string with an optional limit.
+     *
+     * @param      $array
+     * @param null $max_count
+     * @return string
+     */
     public function oxford($array, $max_count = null)
     {
         $array_count = count($array);
@@ -310,6 +459,13 @@ class Humanize
         return $list;
     }
 
+    /**
+     * Describes how many times an action item appears in a list
+     *
+     * @param $list
+     * @param $action
+     * @return string
+     */
     public function frequency($list, $action)
     {
         $list_count = count($list);
