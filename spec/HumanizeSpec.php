@@ -154,12 +154,12 @@ class HumanizeSpec extends ObjectBehavior
 
     function it_formats_numbers_with_decimal_places_and_commas()
     {
-        $this->formatnumbers(123456789, 2)->shouldReturn('123,456,789.00');
+        $this->formatnumber(123456789, 2)->shouldReturn('123,456,789.00');
     }
 
     function it_formats_numbers_that_have_decimals_already()
     {
-        $this->formatnumbers(123456789.12, 2)->shouldReturn('123,456,789.12');
+        $this->formatnumber(123456789.12, 2)->shouldReturn('123,456,789.12');
     }
 
     function it_compacts_large_numbers()

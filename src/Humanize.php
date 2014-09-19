@@ -64,6 +64,8 @@ class Humanize
     }
 
     /**
+     * Return AP formatted numbers, use words for numbers less than 10
+     *
      * @param $int
      * @return mixed
      */
@@ -86,6 +88,8 @@ class Humanize
     }
 
     /**
+     * Return humanized date for yesterday, today, tomorrow
+     *
      * @param        $date
      * @param string $format
      * @return bool|string
@@ -104,6 +108,8 @@ class Humanize
     }
 
     /**
+     * Get yesterdays date
+     *
      * @param string $format
      * @return bool|string
      */
@@ -113,6 +119,8 @@ class Humanize
     }
 
     /**
+     * Get tomorrows date
+     *
      * @param string $format
      * @return bool|string
      */
@@ -122,6 +130,8 @@ class Humanize
     }
 
     /**
+     * Get todays date
+     *
      * @param string $format
      * @return bool|string
      */
@@ -146,10 +156,12 @@ class Humanize
     }
 
     /**
+     * Formats a number to a human-readable number.
+     *
      * @param $number
      * @return string
      */
-    public function formatnumbers($number)
+    public function formatnumber($number)
     {
         return number_format($number, 2, '.', ',');
     }
