@@ -364,12 +364,12 @@ class Humanize
      * Capitalizes the first letter in a string, optionally lowercase the tail.
      *
      * @param      $string
-     * @param bool $lowercase_first
+     * @param bool $lowercase_tail
      * @return string
      */
-    public function capitalize($string, $lowercase_first = false)
+    public function capitalize($string, $lowercase_tail = false)
     {
-        if($lowercase_first)
+        if($lowercase_tail)
         {
             $string = strtoupper($string);
         }
@@ -388,7 +388,7 @@ class Humanize
      */
     public function capitalizeall($string)
     {
-        // just a wrapper, but here to match HubSport/Humanize
+        // just a wrapper, but here to match HubSpot/Humanize
         return ucwords($string);
     }
 
