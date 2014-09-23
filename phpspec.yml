@@ -1,0 +1,4 @@
+suites:
+    my_suite:
+        namespace: Mhanson01
+        src_path: src

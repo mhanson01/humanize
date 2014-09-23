@@ -1,6 +1,6 @@
 <?php
 
-namespace spec;
+namespace spec\Mhanson01;
 
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
@@ -9,7 +9,7 @@ class HumanizeSpec extends ObjectBehavior
 {
     function it_is_initializable()
     {
-        $this->shouldHaveType('Humanize');
+        $this->shouldHaveType('Mhanson01\Humanize');
     }
 
     function it_formats_numbers_with_commas()
