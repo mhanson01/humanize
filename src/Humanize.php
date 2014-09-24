@@ -492,4 +492,25 @@ class Humanize
         return $action . ' ' . $times;
     }
 
+    /**
+     * Check if a date is on the weekend
+     *
+     * @param $date
+     * @return bool
+     */
+    public function isWeekend($date)
+    {
+        return (date('N', strtotime($date)) >= 6);
+    }
+
+    /**
+     * Check if a date is a weekday, utilize the isWeekend function
+     * @param $date
+     * @return bool
+     */
+    public function isWeekday($date)
+    {
+        return ! $this->isWeekend($date);
+    }
+
 }

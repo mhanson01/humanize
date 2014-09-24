@@ -333,4 +333,28 @@ class HumanizeSpec extends ObjectBehavior
         $this->frequency($this->selfies, 'took selfies')->shouldReturn('never took selfies');
     }
 
+    function it_checks_if_a_date_is_on_the_weekend()
+    {
+        //sunday
+        $this->isWeekend('2014-09-21')->shouldReturn(true);
+    }
+
+    function it_checks_if_a_date_is_on_the_weekday()
+    {
+        //sunday
+        $this->isWeekday('2014-09-21')->shouldReturn(false);
+    }
+
+    function it_checks_if_a_date_is_on_the_weekend_use_weekday()
+    {
+        //monday
+        $this->isWeekend('2014-09-22')->shouldReturn(false);
+    }
+
+    function it_checks_if_a_date_is_on_the_weekday_use_weekday()
+    {
+        //monday
+        $this->isWeekday('2014-09-22')->shouldReturn(true);
+    }
+
 }
