@@ -64,7 +64,7 @@ class Humanize
     }
 
     /**
-     * Return AP formatted numbers, use words for numbers less than 10
+     * Return AP formatted numbers, use words for numbers less than 10.
      *
      * @param $int
      * @return mixed
@@ -88,7 +88,7 @@ class Humanize
     }
 
     /**
-     * Return humanized date for yesterday, today, tomorrow
+     * Return humanized date for yesterday, today, and tomorrow, else return date.
      *
      * @param        $date
      * @param string $format
@@ -167,7 +167,7 @@ class Humanize
     }
 
     /**
-     * Converts an integer into its most compact representation.
+     * Converts an integer into a compact representation.
      *
      * @param     $int
      * @param int $decimal_places
@@ -472,7 +472,7 @@ class Humanize
     }
 
     /**
-     * Describes how many times an action item appears in a list
+     * Describes how many times an action item appears in a list.
      *
      * @param $list
      * @param $action
@@ -493,7 +493,7 @@ class Humanize
     }
 
     /**
-     * Check if a date is on the weekend
+     * Check if a date is on the weekend.
      *
      * @param $date
      * @return bool
@@ -504,7 +504,8 @@ class Humanize
     }
 
     /**
-     * Check if a date is a weekday, utilize the isWeekend function
+     * Check if a date is a weekday, utilizes the isWeekend function.
+     *
      * @param $date
      * @return bool
      */
