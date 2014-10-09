@@ -74,7 +74,7 @@ Truncates a string after a certain number of words.
 
 ##### br2nl
 
-Conversion of <br/> tags to newlines.
+Conversion of &lt;br/&gt; tags to newlines.
 
 ##### capitalize
 
