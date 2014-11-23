@@ -1,4 +1,4 @@
-<?php namespace Mhanson01;
+<?php namespace Humanize;
 
 class Humanize
 {

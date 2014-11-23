@@ -1,4 +1,4 @@
 suites:
     my_suite:
-        namespace: Mhanson01
+        namespace: Humanize
         src_path: src

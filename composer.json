@@ -5,5 +5,5 @@
     "config": {
         "bin-dir": "vendor/bin"
     },
-    "autoload": {"psr-4": {"Mhanson01\\": "src/"}}
+    "autoload": {"psr-4": {"Humanize\\": "src/"}}
 }
